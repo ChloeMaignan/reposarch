@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import * as THREE from 'three';
-import { GLTFLoader } from 'three-stdlib';
-import { OrbitControls } from 'three-stdlib';
-import { useEffect, useRef } from 'react';
+import * as THREE from "three";
+import { GLTFLoader } from "three-stdlib";
+import { OrbitControls } from "three-stdlib";
+import { useEffect, useRef } from "react";
 
 export default function Three(): JSX.Element {
   const refContainer = useRef<HTMLDivElement>(null);
@@ -19,6 +19,7 @@ export default function Three(): JSX.Element {
     const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
 
     const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
+      container: refContainer,
       alpha: true,
     });
 
@@ -32,11 +33,7 @@ export default function Three(): JSX.Element {
     scene.add(grid);
 
     const axes = new THREE.AxesHelper();
-    if (Array.isArray(axes.material)) {
-      axes.material.forEach((material) => (material.depthTest = false));
-    } else {
-      axes.material.depthTest = false;
-    }
+    axes.material.depthTest = false;
     axes.renderOrder = 1;
     scene.add(axes);
 
@@ -57,7 +54,7 @@ export default function Three(): JSX.Element {
     let mesh;
 
     loader.load(
-      '/models/justin.glb',
+      "/models/justin.glb",
       function (gltf) {
         gltf.scene.scale.x = 3;
         gltf.scene.scale.y = 3;
@@ -121,7 +118,7 @@ export default function Three(): JSX.Element {
       renderer.render(scene, camera);
     }
     animate();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       size.width = window.innerWidth;
       size.height = window.innerHeight * 0.75;
       camera.aspect = size.width / size.height;
